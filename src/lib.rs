@@ -306,7 +306,8 @@ RUSTFLAGS="--cfg portable_atomic_no_outline_atomics" cargo ...
 #![cfg_attr(
     all(
         any(target_arch = "aarch64", target_arch = "powerpc64", target_arch = "s390x"),
-        any(miri, portable_atomic_sanitize_thread),
+        any(test, miri, portable_atomic_sanitize_thread),
+        any(portable_atomic_new_atomic_intrinsics, portable_atomic_llvm_15),
     ),
     feature(core_intrinsics)
 )]

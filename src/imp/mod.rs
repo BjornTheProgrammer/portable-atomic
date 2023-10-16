@@ -150,6 +150,26 @@ mod riscv;
 ))]
 mod x86;
 
+// test only
+#[cfg(test)]
+#[cfg(any(portable_atomic_new_atomic_intrinsics, portable_atomic_llvm_15))]
+#[cfg(any(
+    target_arch = "aarch64",
+    all(
+        target_arch = "powerpc64",
+        any(
+            target_feature = "quadword-atomics",
+            portable_atomic_target_feature = "quadword-atomics"
+        )
+    ),
+    all(
+        target_arch = "x86_64",
+        any(target_feature = "cmpxchg16b", portable_atomic_target_feature = "cmpxchg16b")
+    )
+))]
+#[path = "atomic128/intrinsics.rs"]
+mod intrinsics;
+
 // -----------------------------------------------------------------------------
 // Lock-based fallback implementations
 
